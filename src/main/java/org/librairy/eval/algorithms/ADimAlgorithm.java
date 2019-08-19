@@ -1,20 +1,22 @@
 package org.librairy.eval.algorithms;
 
-import com.google.common.base.Strings;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.librairy.eval.model.Neighbour;
 import org.librairy.eval.model.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import com.google.common.base.Strings;
 
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
  */
 public class ADimAlgorithm extends AbstractKeyValueAlgorithm{
 
+    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(ADimAlgorithm.class);
 
     public ADimAlgorithm(Double threshold){

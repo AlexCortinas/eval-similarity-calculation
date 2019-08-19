@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class WikiArticle {
 
+    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(WikiArticle.class);
 
     private String url;

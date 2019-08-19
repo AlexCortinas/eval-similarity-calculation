@@ -1,6 +1,5 @@
 package org.librairy.eval.model;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.librairy.eval.algorithms.ClustererAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Report {
 
+    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(Report.class);
     private String testId;
 
@@ -25,7 +25,8 @@ public class Report {
 
     Long maxSimilarities        = 0l;
 
-    Long calculatedSimilarities = 0l;
+    Long calculatedSimilaritiesForCluster = 0l;
+    Long calculatedSimilaritiesForQuerying = 0l;
 
     Long minSimilarities        = 0l;
 
@@ -48,12 +49,25 @@ public class Report {
     }
 
     public Double getCost(){
-        return (Math.min(Math.max(Double.valueOf(calculatedSimilarities),Double.valueOf(minSimilarities)),Double.valueOf(maxSimilarities)) - (Double.valueOf(minSimilarities))) / (Double.valueOf(maxSimilarities) - (Double.valueOf(minSimilarities)));
+        return (Math.min(Math.max(Double.valueOf(calculatedSimilaritiesForQuerying),Double.valueOf(minSimilarities)),Double.valueOf(maxSimilarities)) - (Double.valueOf(minSimilarities))) / (Double.valueOf(maxSimilarities) - (Double.valueOf(minSimilarities)));
     }
 
-    public Long increaseCalculatedSimilarities(Long num){
-        calculatedSimilarities += num;
-        return calculatedSimilarities;
+    public Long increaseCalculatedSimilaritiesForQuerying(Long num){
+        return increaseCalculatedSimilarities(num, false);
+    }
+
+    public Long increaseCalculatedSimilaritiesForClustering(Long num){
+        return increaseCalculatedSimilarities(num, true);
+    }
+
+    private Long increaseCalculatedSimilarities(Long num, boolean clustering){
+        if (clustering) {
+            calculatedSimilaritiesForCluster += num;
+            return calculatedSimilaritiesForCluster;
+        } else {
+            calculatedSimilaritiesForQuerying += num;
+            return calculatedSimilaritiesForQuerying;
+        }
     }
 
     public void update(Neighbourhood reference, Neighbourhood custom){
@@ -61,7 +75,7 @@ public class Report {
         fp += custom.getClosestNeighbours().stream().filter( point -> !reference.getClosestNeighbours().contains(point)).count();
         fn += reference.getClosestNeighbours().stream().filter( point -> !custom.getClosestNeighbours().contains(point)).count();
 
-        increaseCalculatedSimilarities(Long.valueOf(custom.getNumberOfNeighbours()));
+        increaseCalculatedSimilaritiesForQuerying(Long.valueOf(custom.getNumberOfNeighbours()));
     }
 
     public Double getEfficiency(){
@@ -69,7 +83,7 @@ public class Report {
     }
 
     public Double getSavingSimilarities(){
-        return 100.0 - (Double.valueOf(calculatedSimilarities)*100.0)/Double.valueOf(maxSimilarities);
+        return 100.0 - (Double.valueOf(calculatedSimilaritiesForQuerying)*100.0)/Double.valueOf(maxSimilarities);
     }
 
     public Double getFMeasure(){
@@ -143,14 +157,6 @@ public class Report {
         this.maxSimilarities = maxSimilarities;
     }
 
-    public Long getCalculatedSimilarities() {
-        return calculatedSimilarities;
-    }
-
-    public void setCalculatedSimilarities(Long calculatedSimilarities) {
-        this.calculatedSimilarities = calculatedSimilarities;
-    }
-
     public Long getMinSimilarities() {
         return minSimilarities;
     }
@@ -185,7 +191,8 @@ public class Report {
                 ", fn=" + fn +
                 ", numberOfClusters=" + numberOfClusters +
                 ", maxSimilarities=" + maxSimilarities +
-                ", calculatedSimilarities=" + calculatedSimilarities +
+                ", calculatedSimilaritiesForCluster=" + calculatedSimilaritiesForCluster +
+                ", calculatedSimilaritiesForQuerying=" + calculatedSimilaritiesForQuerying +
                 ", minSimilarities=" + minSimilarities +
                 ", trainingSize=" + trainingSize +
                 ", testSize=" + testSize +

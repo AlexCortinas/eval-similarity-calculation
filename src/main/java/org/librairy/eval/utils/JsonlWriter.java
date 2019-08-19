@@ -1,17 +1,16 @@
 package org.librairy.eval.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.zip.GZIPOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
@@ -24,7 +23,6 @@ public class JsonlWriter<T> {
 
     private BufferedWriter writer;
     private ObjectMapper jsonMapper = new ObjectMapper();
-    private Class<T> type;
 
     public JsonlWriter(File jsonFile) throws IOException {
         if (jsonFile.exists()) jsonFile.delete();

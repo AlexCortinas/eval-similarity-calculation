@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class ClustererReport {
 
+    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(ClustererReport.class);
 
     private Long numClusters;

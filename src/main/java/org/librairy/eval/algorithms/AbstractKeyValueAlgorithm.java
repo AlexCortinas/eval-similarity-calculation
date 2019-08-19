@@ -1,5 +1,10 @@
 package org.librairy.eval.algorithms;
 
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
 import org.librairy.eval.metrics.JensenShannon;
 import org.librairy.eval.model.KeyStore;
 import org.librairy.eval.model.Neighbour;
@@ -7,12 +12,6 @@ import org.librairy.eval.model.Neighbourhood;
 import org.librairy.eval.model.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
@@ -23,12 +22,12 @@ public abstract class AbstractKeyValueAlgorithm implements ClustererAlgorithm {
     private final KeyStore keystore;
     private final String id;
     protected Double threshold;
-    private Set labels;
+    private Set<String> labels;
 
     public AbstractKeyValueAlgorithm(String id, Double threshold){
         this.id = id;
         this.threshold = threshold;
-        this.labels  = new TreeSet();
+        this.labels  = new TreeSet<String>();
         this.keystore = new KeyStore("target/"+getId());
     }
 

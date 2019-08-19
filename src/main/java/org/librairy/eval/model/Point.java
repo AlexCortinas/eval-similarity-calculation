@@ -7,16 +7,17 @@
 
 package org.librairy.eval.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
@@ -58,6 +59,11 @@ public class Point {
     public Point(String id, List<Double> vector){
         this.id = id;
         this.vector = vector;
+    }
+
+    public Point(Point point) {
+        this.id = point.id;
+        this.vector = point.vector;
     }
 
     public List<Double> getVector() {

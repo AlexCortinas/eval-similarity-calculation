@@ -1,13 +1,12 @@
 package org.librairy.eval.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.librairy.eval.metrics.JensenShannon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
@@ -15,12 +14,14 @@ import java.util.stream.Collectors;
 
 public class Neighbourhood {
 
+    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(Neighbourhood.class);
 
     private Point reference;
 
     private List<Neighbour> closestNeighbours;
 
+    // Store all the neighbours compared in order to count the number of comparisons
     private Integer numberOfNeighbours;
 
     private Double minScore;
